@@ -17,7 +17,7 @@ public class MyGdxGame implements ApplicationListener
 		texture = new Texture(Gdx.files.internal("android.jpg"));
 		batch = new SpriteBatch();
 		z80.reset();
-		z80.loadCartridge("/storage/emulated/0/Download/Tetris (World)/Tetris (World).gb");
+		z80.loadCartridge("/storage/emulated/0/Download/cpu_instrs/individual/06-ld r,r.gb");
 	}
 
 	@Override

@@ -10,7 +10,7 @@ public class Z80
 	/**
 	 * The 160x144 pixel 4 colors display
 	 */
-	private byte[] display;
+	public byte[] display;
 	/**
 	 * 64K Memory<br/>
 	 * 0000-3FFF 16KB ROM Bank 00 (in cartridge, fixed at bank 00)<br/>
