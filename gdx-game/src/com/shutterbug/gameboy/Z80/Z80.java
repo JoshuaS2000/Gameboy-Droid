@@ -2,6 +2,7 @@ package com.shutterbug.gameboy.Z80;
 import java.io.*;
 import android.util.*;
 import java.util.logging.*;
+import com.shutterbug.gameboy.Chips.*;
 
 public class Z80
 {
@@ -27,6 +28,10 @@ public class Z80
 	 * FFFF Interrupt Enable Register<br/>
 	 */
 	public char[] memory;
+	
+	// we'll see how this goes.
+	private char[] cartridge;
+	
 	/**
 	 * 8 8-bit Registers<br/>
 	 * They can be paired up to 16-bit registers<br/>
@@ -58,13 +63,22 @@ public class Z80
 	public void reset() {
 		display = new byte[160 * 144];
 		memory = new char[65535];
+		cartridge = new char[2000000];
 		register = new char[8];
 		pc = 0x100;
 		sp = 0xFFFE;
 		}
 		
+		/**
+		 * Copy banks one and two into the correct memory 
+		 * address(need to make bank switching)
+		 */
+		public void initCartridge(){
+			
+		}
+		
 		public void opcode(){
-			switch(memory[pc]){
+			switch(cartridge[pc]){
 				case 0x00:{ //nop
 					pc++;
 					lastCycles = 4;
@@ -262,7 +276,7 @@ public class Z80
 
 			int offset = 0;
 			while (input.available() > 0) {
-				memory[offset] = (char) (input.readByte() & 0xFF);
+				cartridge[offset] = (char) (input.readByte() & 0xFF);
 				offset++;
 			}
 
@@ -292,6 +306,7 @@ public class Z80
 	}
 	
 	public void writeMemory(int address, int value) {
+		// TODO: Make the correct events happen if specific memory addresses are written to.
 		memory[address] = (char)(value & 0xFF);
 	}
 	public void incrementPc(){
@@ -421,4 +436,9 @@ public class Z80
 					test16bitCarry(l, r);
 					test16bitHalfCarry(l, r);
 				}
+				
+				public void switchbank(){
+					//Called upon a memory write to 2000-3FFF? or upon startup.
+				}
+				
 				}
